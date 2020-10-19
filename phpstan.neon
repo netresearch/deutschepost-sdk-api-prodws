@@ -1,0 +1,4 @@
+includes:
+parameters:
+  ignoreErrors:
+    - "#Access to an undefined property SoapFault*#"
