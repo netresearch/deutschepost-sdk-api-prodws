@@ -13,14 +13,14 @@ namespace DeutschePost\Sdk\ProdWS\Api\Data;
  *
  * @api
  */
-interface ProductListInterface
+interface SalesProductListInterface
 {
     /**
      * Obtain unique ID in the ProdWS system.
      *
-     * @return string
+     * @return int
      */
-    public function getId(): string;
+    public function getId(): int;
 
     /**
      * Obtain start date of the product revision.

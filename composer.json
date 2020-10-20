@@ -21,6 +21,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-dom": "*",
         "ext-soap": "*",
         "psr/log": "^1.1"
     },

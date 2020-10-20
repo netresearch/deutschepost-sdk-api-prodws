@@ -21,7 +21,7 @@ class GetProductVersionsListRequest
     private $subMandantID;
 
     /**
-     * @var boolean $dedicatedProducts
+     * @var bool $dedicatedProducts
      */
     private $dedicatedProducts;
 
@@ -31,7 +31,7 @@ class GetProductVersionsListRequest
     private $responseMode;
 
     /**
-     * @var boolean $onlyChanges
+     * @var bool $onlyChanges
      */
     private $onlyChanges;
 
@@ -41,7 +41,7 @@ class GetProductVersionsListRequest
     private $referenceDate;
 
     /**
-     * @var boolean $shortList
+     * @var bool $shortList
      */
     private $shortList;
 

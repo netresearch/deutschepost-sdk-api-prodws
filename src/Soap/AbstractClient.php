@@ -13,5 +13,12 @@ use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponse;
 
 abstract class AbstractClient
 {
-    abstract public function getProductVersionsList(GetProductVersionsListRequest $requestType): GetProductVersionsListResponse;
+    /**
+     * @param GetProductVersionsListRequest $requestType
+     * @return GetProductVersionsListResponse
+     * @throws \SoapFault
+     */
+    abstract public function getProductVersionsList(
+        GetProductVersionsListRequest $requestType
+    ): GetProductVersionsListResponse;
 }

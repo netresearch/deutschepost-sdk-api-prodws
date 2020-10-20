@@ -8,7 +8,8 @@ declare(strict_types=1);
 
 namespace DeutschePost\Sdk\ProdWS\Api;
 
-use DeutschePost\Sdk\ProdWS\Api\Data\ProductListInterface;
+use DeutschePost\Sdk\ProdWS\Api\Data\SalesProductListInterface;
+use DeutschePost\Sdk\ProdWS\Exception\ServiceException;
 
 /**
  * @api
@@ -16,7 +17,10 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ProductListInterface;
 interface ProductInformationServiceInterface
 {
     /**
-     * @return ProductListInterface[]
+     * @param string $mandantId
+     * @return SalesProductListInterface[]
+     *
+     * @throws ServiceException
      */
-    public function getProductLists(): array;
+    public function getProductLists(string $mandantId): array;
 }
