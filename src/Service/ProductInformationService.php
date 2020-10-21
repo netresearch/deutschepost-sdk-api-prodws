@@ -38,7 +38,7 @@ class ProductInformationService implements ProductInformationServiceInterface
 
         try {
             $response = $this->client->getProductVersionsList($request);
-            return $this->responseMapper->map($response);
+            return $this->responseMapper->map($response->getResponse());
         } catch (\Throwable $exception) {
             // Catch all leftovers, e.g. \SoapFault, \Exception, ...
             throw ServiceExceptionFactory::createServiceException($exception);

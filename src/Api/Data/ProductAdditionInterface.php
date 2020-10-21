@@ -44,6 +44,13 @@ interface ProductAdditionInterface
     public function getDestination(): string;
 
     /**
+     * Obtain gross price of the product addition.
+     *
+     * @return ValueInterface
+     */
+    public function getPrice(): ValueInterface;
+
+    /**
      * Obtain start date of the product addition revision.
      *
      * @return \DateTime
@@ -53,14 +60,7 @@ interface ProductAdditionInterface
     /**
      * Obtain end date of the product addition revision.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getValidTo(): \DateTime;
-
-    /**
-     * Obtain gross price of the product addition.
-     *
-     * @return int Amount in euro cent.
-     */
-    public function getPrice(): int;
+    public function getValidTo(): ?\DateTime;
 }

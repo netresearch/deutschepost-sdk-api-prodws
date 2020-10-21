@@ -32,7 +32,7 @@ class AccountProdReferenceType
 
     public function getProdWSID(): string
     {
-        return $this->ProdWSID;
+        return $this->ProdWSID ?? $this->{'ProdWS-ID'};
     }
 
     public function getVersion(): int

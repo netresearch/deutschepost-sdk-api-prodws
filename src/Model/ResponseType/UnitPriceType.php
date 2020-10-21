@@ -42,7 +42,8 @@ class UnitPriceType
 
     public function getRate(): float
     {
-        return $this->rate;
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->rate * 100 / 100;
     }
 
     public function getGrossPrice(): CurrencyAmountType

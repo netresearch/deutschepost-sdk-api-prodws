@@ -32,17 +32,32 @@ class NumericValueType
 
     public function getMinValue(): ?float
     {
-        return $this->minValue;
+        if ($this->minValue === null) {
+            return $this->minValue;
+        }
+
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->minValue * 100 / 100;
     }
 
     public function getMaxValue(): ?float
     {
-        return $this->maxValue;
+        if ($this->maxValue === null) {
+            return $this->maxValue;
+        }
+
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->maxValue * 100 / 100;
     }
 
     public function getFixValue(): ?float
     {
-        return $this->fixValue;
+        if ($this->fixValue === null) {
+            return $this->fixValue;
+        }
+
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->fixValue * 100 / 100;
     }
 
     public function getUnit(): ?string

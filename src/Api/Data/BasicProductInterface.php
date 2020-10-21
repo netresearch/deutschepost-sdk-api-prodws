@@ -46,25 +46,11 @@ interface BasicProductInterface
     public function getDestination(): string;
 
     /**
-     * Obtain start date of the product revision.
-     *
-     * @return \DateTime
-     */
-    public function getValidFrom(): \DateTime;
-
-    /**
-     * Obtain end date of the product revision.
-     *
-     * @return \DateTime
-     */
-    public function getValidTo(): \DateTime;
-
-    /**
      * Obtain gross price of the product.
      *
-     * @return int Amount in euro cent.
+     * @return ValueInterface
      */
-    public function getPrice(): int;
+    public function getPrice(): ValueInterface;
 
     /**
      * Obtain min and max length of the product.
@@ -90,7 +76,23 @@ interface BasicProductInterface
     /**
      * Obtain min and max weight of the product.
      *
-     * @return ValueRangeInterface
+     * Note that e.g. "Postkarte" product has no volume and therefore no weight limitations.
+     *
+     * @return ValueRangeInterface|null
      */
-    public function getWeight(): ValueRangeInterface;
+    public function getWeight(): ?ValueRangeInterface;
+
+    /**
+     * Obtain start date of the product revision.
+     *
+     * @return \DateTime
+     */
+    public function getValidFrom(): \DateTime;
+
+    /**
+     * Obtain end date of the product revision.
+     *
+     * @return \DateTime|null
+     */
+    public function getValidTo(): ?\DateTime;
 }

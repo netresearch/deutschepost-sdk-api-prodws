@@ -88,7 +88,7 @@ class ExtendedIdentifierType
     /**
      * @return ExternIdentifierType[]
      */
-    public function getExternIdentifier(): array
+    public function getExternalIdentifiers(): array
     {
         if (empty($this->externIdentifier)) {
             return [];
@@ -106,7 +106,7 @@ class ExtendedIdentifierType
      */
     public function getProdWSID(): string
     {
-        return $this->ProdWSID;
+        return $this->ProdWSID ?? $this->{'ProdWS-ID'};
     }
 
     /**

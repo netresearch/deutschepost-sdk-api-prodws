@@ -100,7 +100,7 @@ class SalesProductType
         return $this->dimensionList;
     }
 
-    public function getWeight(): NumericValueType
+    public function getWeight(): ?NumericValueType
     {
         return $this->weight;
     }

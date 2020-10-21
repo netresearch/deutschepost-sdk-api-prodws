@@ -48,9 +48,9 @@ interface SalesProductInterface
     /**
      * Obtain gross price of the product.
      *
-     * @return int Amount in euro cent.
+     * @return ValueInterface
      */
-    public function getPrice(): int;
+    public function getPrice(): ValueInterface;
 
     /**
      * Obtain min and max length of the product.
@@ -76,9 +76,11 @@ interface SalesProductInterface
     /**
      * Obtain min and max weight of the product.
      *
-     * @return ValueRangeInterface
+     * Note that e.g. "Postkarte" product has no volume and therefore no weight limitations.
+     *
+     * @return ValueRangeInterface|null
      */
-    public function getWeight(): ValueRangeInterface;
+    public function getWeight(): ?ValueRangeInterface;
 
     /**
      * Obtain the sales product's components.

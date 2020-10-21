@@ -9,15 +9,11 @@ declare(strict_types=1);
 namespace DeutschePost\Sdk\ProdWS\Api\Data;
 
 /**
- * Dimension (mm) or weight (g) range.
- *
  * @api
  */
-interface ValueRangeInterface
+interface ValueInterface
 {
     public function getUnit(): string;
 
-    public function getMin(): float;
-
-    public function getMax(): float;
+    public function getAmount(): float;
 }

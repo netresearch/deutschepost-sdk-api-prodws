@@ -41,7 +41,8 @@ class CurrencyAmountType
 
     public function getValue(): float
     {
-        return $this->value;
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->value * 100 / 100;
     }
 
     public function getCurrency(): string

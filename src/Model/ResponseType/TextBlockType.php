@@ -42,7 +42,12 @@ class TextBlockType
 
     public function getSize(): ?float
     {
-        return $this->size;
+        if ($this->size === null) {
+            return $this->size;
+        }
+
+        // PHP SOAP sets this as string, although declared as "xs:decimal"
+        return $this->size * 100 / 100;
     }
 
     public function getStyle(): ?string

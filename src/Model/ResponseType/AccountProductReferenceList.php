@@ -18,7 +18,7 @@ class AccountProductReferenceList
     /**
      * @return AccountProdReferenceType[]
      */
-    public function getAccountProductReference(): array
+    public function getAccountProductReferences(): array
     {
         if (empty($this->accountProductReference)) {
             return [];
