@@ -58,4 +58,9 @@ The library's components suitable for consumption comprise
 
 #### Usage
 
-t.b.d.
+```php
+$logger = new \Psr\Log\NullLogger();
+$serviceFactory = new \DeutschePost\Sdk\ProdWS\Service\ServiceFactory();
+$service = $serviceFactory->createProductInformationService('user', 'password', $logger);
+$productLists = $service->getProductLists('MANDANT_ID');
+```
