@@ -9,17 +9,18 @@ declare(strict_types=1);
 namespace DeutschePost\Sdk\ProdWS\Model;
 
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\ExceptionDetailType;
+use DeutschePost\Sdk\ProdWS\Model\ResponseType\ExceptionList;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\GetProductVersionsListResponseType;
 
 class GetProductVersionsListResponse
 {
     /**
-     * @var GetProductVersionsListResponseType $Response
+     * @var GetProductVersionsListResponseType|null $Response
      */
     private $Response;
 
     /**
-     * @var ExceptionDetailType|ExceptionDetailType[] $Exception
+     * @var ExceptionList|null $Exception
      */
     private $Exception;
 
@@ -28,27 +29,13 @@ class GetProductVersionsListResponse
      */
     private $success;
 
-    /**
-     * @return GetProductVersionsListResponseType
-     */
-    public function getResponse(): GetProductVersionsListResponseType
+    public function getResponse(): ?GetProductVersionsListResponseType
     {
         return $this->Response;
     }
 
-    /**
-     * @return ExceptionDetailType[]
-     */
-    public function getException(): array
+    public function getExceptionList(): ?ExceptionList
     {
-        if (empty($this->Exception)) {
-            return [];
-        }
-
-        if ($this->Exception instanceof ExceptionDetailType) {
-            return [$this->Exception];
-        }
-
         return $this->Exception;
     }
 

@@ -41,10 +41,10 @@ class LoggerDecorator extends AbstractDecorator
 
         try {
             $response = parent::getProductVersionsList($requestType);
-        } catch (\SoapFault $fault) {
+        } catch (\Exception $exception) {
             $logLevel = LogLevel::ERROR;
 
-            throw $fault;
+            throw $exception;
         } finally {
             $lastRequest = sprintf(
                 "%s\n%s",
@@ -61,8 +61,8 @@ class LoggerDecorator extends AbstractDecorator
             $this->logger->log($logLevel, $lastRequest);
             $this->logger->log($logLevel, $lastResponse);
 
-            if (isset($fault)) {
-                $this->logger->log($logLevel, $fault->getMessage());
+            if (isset($exception)) {
+                $this->logger->log($logLevel, $exception->getMessage());
             }
         }
 

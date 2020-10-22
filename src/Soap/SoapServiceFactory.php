@@ -13,6 +13,7 @@ use DeutschePost\Sdk\ProdWS\Api\ServiceFactoryInterface;
 use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponseMapper;
 use DeutschePost\Sdk\ProdWS\Service\ProductInformationService;
 use DeutschePost\Sdk\ProdWS\Soap\ClientDecorator\AuthenticationDecorator;
+use DeutschePost\Sdk\ProdWS\Soap\ClientDecorator\ErrorHandlerDecorator;
 use DeutschePost\Sdk\ProdWS\Soap\ClientDecorator\LoggerDecorator;
 use Psr\Log\LoggerInterface;
 
@@ -34,6 +35,7 @@ class SoapServiceFactory implements ServiceFactoryInterface
         LoggerInterface $logger
     ): ProductInformationServiceInterface {
         $pluginClient = new Client($this->soapClient);
+        $pluginClient = new ErrorHandlerDecorator($pluginClient);
         $pluginClient = new AuthenticationDecorator($pluginClient, $this->soapClient, $username, $password);
         $pluginClient = new LoggerDecorator($pluginClient, $this->soapClient, $logger);
 
