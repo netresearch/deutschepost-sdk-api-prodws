@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace DeutschePost\Sdk\ProdWS\Api\Data;
 
 /**
- * PPL (Postpreisliste)
+ * PPL (product price list)
  *
  * @api
  */

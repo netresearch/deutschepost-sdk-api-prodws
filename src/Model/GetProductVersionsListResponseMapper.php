@@ -10,6 +10,9 @@ namespace DeutschePost\Sdk\ProdWS\Model;
 
 use DeutschePost\Sdk\ProdWS\Api\Data\SalesProductListInterface;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\AccountProdReferenceType;
+use DeutschePost\Sdk\ProdWS\Model\ResponseType\AdditionalProductType;
+use DeutschePost\Sdk\ProdWS\Model\ResponseType\BasicProductList;
+use DeutschePost\Sdk\ProdWS\Model\ResponseType\BasicProductType;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\ExtendedIdentifierType;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\GetProductVersionsListResponseType;
 use DeutschePost\Sdk\ProdWS\Service\ProductInformationService\BasicProduct;
@@ -34,61 +37,25 @@ class GetProductVersionsListResponseMapper
     }
 
     /**
-     * @param GetProductVersionsListResponseType $response
+     * @param ?GetProductVersionsListResponseType $response
      * @return SalesProductListInterface[]
      * @throws \Exception
      */
-    public function map(GetProductVersionsListResponseType $response): array
+    public function map(?GetProductVersionsListResponseType $response): array
     {
-        if (empty($response->getSalesProductList())) {
+        if ($response === null || $response->getSalesProductList() === null) {
             return [];
         }
 
-        $basicProducts = [];
-        $productAdditions = [];
         $salesProducts = [];
 
-        foreach ($response->getBasicProductList()->getBasicProducts() as $basicProduct) {
-            $extId = $basicProduct->getExtendedIdentifier();
-            $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
+        $basicProducts = $this->extractBasicProducts(
+            $response->getBasicProductList()
+        );
 
-            $price = $basicProduct->getPriceDefinition()->getGrossPrice();
-            $length = $basicProduct->getDimensionList()->getLength();
-            $width = $basicProduct->getDimensionList()->getWidth();
-            $height = $basicProduct->getDimensionList()->getHeight();
-            $weight = $basicProduct->getWeight();
-
-            $basicProducts[$key] = new BasicProduct(
-                $extId->getProdWSID(),
-                $extId->getName(),
-                $extId->getVersion(),
-                $extId->getDestination(),
-                new Value($price->getCurrency(), $price->getValue()),
-                new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
-                new ValueRange($width->getUnit(), $width->getMinValue(), $width->getMaxValue()),
-                new ValueRange($height->getUnit(), $height->getMinValue(), $height->getMaxValue()),
-                $weight ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
-                new \DateTime($extId->getValidFrom()),
-                $extId->getValidTo() ? new \DateTime($extId->getValidTo()) : null
-            );
-        }
-
-        foreach ($response->getAdditionalProductList()->getAdditionalProducts() as $additionalProduct) {
-            $extId = $additionalProduct->getExtendedIdentifier();
-            $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
-
-            $price = $additionalProduct->getPriceDefinition()->getGrossPrice();
-
-            $productAdditions[$key] = new ProductAddition(
-                $extId->getProdWSID(),
-                $extId->getName(),
-                $extId->getVersion(),
-                $extId->getDestination(),
-                new Value($price->getCurrency(), $price->getValue()),
-                new \DateTime($extId->getValidFrom()),
-                $extId->getValidTo() ? new \DateTime($extId->getValidTo()) : null
-            );
-        }
+        $productAdditions = $this->extractProductAdditions(
+            $response->getAdditionalProductList()
+        );
 
         $productListDates = [];
         foreach ($response->getSalesProductList()->getSalesProducts() as $salesProduct) {
@@ -102,7 +69,7 @@ class GetProductVersionsListResponseMapper
             $weight = $salesProduct->getWeight();
 
             $refKeys = array_map(
-                function (AccountProdReferenceType $ref) {
+                static function (AccountProdReferenceType $ref) {
                     return sprintf("%s-%d", $ref->getProdWSID(), $ref->getVersion());
                 },
                 $salesProduct->getAccountProductReferenceList()->getAccountProductReferences()
@@ -143,5 +110,83 @@ class GetProductVersionsListResponseMapper
         }
 
         return $productLists;
+    }
+
+    /**
+     * @param BasicProductList|null $productList
+     * @return BasicProduct[]
+     * @throws \Exception
+     */
+    private function extractBasicProducts(?BasicProductList $productList): array
+    {
+        if ($productList === null) {
+            return [];
+        }
+
+        return array_reduce(
+            $productList->getBasicProducts(),
+            static function (array $basicProducts, BasicProductType $basicProduct) {
+                $extId = $basicProduct->getExtendedIdentifier();
+                $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
+
+                $price = $basicProduct->getPriceDefinition()->getGrossPrice();
+                $length = $basicProduct->getDimensionList()->getLength();
+                $width = $basicProduct->getDimensionList()->getWidth();
+                $height = $basicProduct->getDimensionList()->getHeight();
+                $weight = $basicProduct->getWeight();
+
+                $basicProducts[$key] = new BasicProduct(
+                    $extId->getProdWSID(),
+                    $extId->getName(),
+                    $extId->getVersion(),
+                    $extId->getDestination(),
+                    new Value($price->getCurrency(), $price->getValue()),
+                    new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
+                    new ValueRange($width->getUnit(), $width->getMinValue(), $width->getMaxValue()),
+                    new ValueRange($height->getUnit(), $height->getMinValue(), $height->getMaxValue()),
+                    $weight ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
+                    new \DateTime($extId->getValidFrom()),
+                    $extId->getValidTo() ? new \DateTime($extId->getValidTo()) : null
+                );
+
+                return $basicProducts;
+            },
+            []
+        );
+    }
+
+    /**
+     * @param ResponseType\AdditionalProductList|null $productAdditionsList
+     * @return ProductAddition[]
+     * @throws \Exception
+     */
+    private function extractProductAdditions(?ResponseType\AdditionalProductList $productAdditionsList): array
+    {
+        if ($productAdditionsList === null) {
+            return [];
+        }
+
+        return array_reduce(
+            $productAdditionsList->getAdditionalProducts(),
+            static function (array $productAdditions, AdditionalProductType $additionalProduct) {
+                $extId = $additionalProduct->getExtendedIdentifier();
+                $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
+
+                $price = $additionalProduct->getPriceDefinition()->getGrossPrice();
+
+                $productAdditions[$key] = new ProductAddition(
+                    $extId->getProdWSID(),
+                    $extId->getName(),
+                    $extId->getVersion(),
+                    $extId->getDestination(),
+                    new Value($price->getCurrency(), $price->getValue()),
+                    new \DateTime($extId->getValidFrom()),
+                    $extId->getValidTo() ? new \DateTime($extId->getValidTo()) : null
+                );
+
+                return $productAdditions;
+            },
+            []
+        );
     }
 }

@@ -1,8 +1,11 @@
 includes:
 parameters:
+  level: 7
+  paths:
+    - src
+    - tests
   ignoreErrors:
     -
       message: "#^Access to an undefined property [A-Za-z\\\\]+\\:\\:\\$ProdWS\\-ID\\.$#"
       count: 2
       path: src/Model/ResponseType/*
-

@@ -95,7 +95,7 @@ class SalesProductType
         return $this->priceDefinition;
     }
 
-    public function getDimensionList(): DimensionList
+    public function getDimensionList(): ?DimensionList
     {
         return $this->dimensionList;
     }
@@ -105,47 +105,47 @@ class SalesProductType
         return $this->weight;
     }
 
-    public function getPropertyList(): PropertyList
+    public function getPropertyList(): ?PropertyList
     {
         return $this->propertyList;
     }
 
-    public function getCountrySpecificPropertyList(): CountrySpecificPropertyList
+    public function getCountrySpecificPropertyList(): ?CountrySpecificPropertyList
     {
         return $this->countrySpecificPropertyList;
     }
 
-    public function getGroupedPropertyList(): GroupedPropertyList
+    public function getGroupedPropertyList(): ?GroupedPropertyList
     {
         return $this->groupedPropertyList;
     }
 
-    public function getDestinationArea(): DestinationAreaType
+    public function getDestinationArea(): ?DestinationAreaType
     {
         return $this->destinationArea;
     }
 
-    public function getUsageList(): UsageList
+    public function getUsageList(): ?UsageList
     {
         return $this->usageList;
     }
 
-    public function getCategoryList(): CategoryList
+    public function getCategoryList(): ?CategoryList
     {
         return $this->categoryList;
     }
 
-    public function getStampTypeList(): StampTypeList
+    public function getStampTypeList(): ?StampTypeList
     {
         return $this->stampTypeList;
     }
 
-    public function getDocumentReferenceList(): DocumentReferenceList
+    public function getDocumentReferenceList(): ?DocumentReferenceList
     {
         return $this->documentReferenceList;
     }
 
-    public function getReferenceTextList(): ReferenceTextList
+    public function getReferenceTextList(): ?ReferenceTextList
     {
         return $this->referenceTextList;
     }
@@ -155,7 +155,7 @@ class SalesProductType
         return $this->accountProductReferenceList;
     }
 
-    public function getAccountServiceReferenceList(): AccountServiceReferenceList
+    public function getAccountServiceReferenceList(): ?AccountServiceReferenceList
     {
         return $this->accountServiceReferenceList;
     }
