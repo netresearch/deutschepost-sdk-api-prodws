@@ -25,7 +25,13 @@ use DeutschePost\Sdk\ProdWS\Service\ProductInformationService\ValueRange;
 
 class GetProductVersionsListResponseMapper
 {
-    private function getPplId(ExtendedIdentifierType $identifiersList): int
+    /**
+     * Obtain the most recent PPL version the product is contained in.
+     *
+     * @param ExtendedIdentifierType $identifiersList
+     * @return int
+     */
+    private function getPPLVersion(ExtendedIdentifierType $identifiersList): int
     {
         foreach ($identifiersList->getExternalIdentifiers() as $externalIdentifier) {
             if ($externalIdentifier->getSource() === 'PPL') {
@@ -34,6 +40,23 @@ class GetProductVersionsListResponseMapper
         }
 
         return 0;
+    }
+
+    /**
+     * Obtain the product's identifier in the PPL system.
+     *
+     * @param ExtendedIdentifierType $identifiersList
+     * @return string
+     */
+    private function getPPLId(ExtendedIdentifierType $identifiersList): string
+    {
+        foreach ($identifiersList->getExternalIdentifiers() as $externalIdentifier) {
+            if ($externalIdentifier->getSource() === 'PPL') {
+                return $externalIdentifier->getId();
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -60,7 +83,8 @@ class GetProductVersionsListResponseMapper
         $productListDates = [];
         foreach ($response->getSalesProductList()->getSalesProducts() as $salesProduct) {
             $extId = $salesProduct->getExtendedIdentifier();
-            $pplId = $this->getPplId($extId);
+            $pplVersion = $this->getPPLVersion($extId);
+            $pplId = $this->getPPLId($extId);
 
             $price = $salesProduct->getPriceDefinition()->getPrice()->getCommercialGrossPrice();
             $length = $salesProduct->getDimensionList()->getLength();
@@ -78,10 +102,11 @@ class GetProductVersionsListResponseMapper
             $basicComponents = array_intersect_key($basicProducts, array_flip($refKeys));
             $additionalComponents = array_intersect_key($productAdditions, array_flip($refKeys));
 
-            $salesProducts[$pplId][] = new SalesProduct(
+            $salesProducts[$pplVersion][] = new SalesProduct(
                 $extId->getProdWSID(),
                 $extId->getName(),
                 $extId->getVersion(),
+                $pplId,
                 $extId->getDestination(),
                 new Value($price->getCurrency(), $price->getValue()),
                 new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
@@ -91,22 +116,22 @@ class GetProductVersionsListResponseMapper
                 new SalesProductComponents(array_shift($basicComponents), $additionalComponents)
             );
 
-            $productListDates[$pplId] = [
+            $productListDates[$pplVersion] = [
                 'valid_from' => $extId->getValidFrom(),
                 'valid_to' => $extId->getValidTo(),
             ];
         }
 
         $productLists = [];
-        foreach ($salesProducts as $pplId => $pplSalesProducts) {
-            $from = new \DateTime($productListDates[$pplId]['valid_from']);
-            if (!empty($productListDates[$pplId]['valid_to'])) {
-                $to = new \DateTime($productListDates[$pplId]['valid_to']);
+        foreach ($salesProducts as $pplVersion => $pplSalesProducts) {
+            $from = new \DateTime($productListDates[$pplVersion]['valid_from']);
+            if (!empty($productListDates[$pplVersion]['valid_to'])) {
+                $to = new \DateTime($productListDates[$pplVersion]['valid_to']);
             } else {
                 $to = null;
             }
 
-            $productLists[] = new SalesProductList($pplId, $from, $to, $pplSalesProducts);
+            $productLists[] = new SalesProductList($pplVersion, $from, $to, $pplSalesProducts);
         }
 
         return $productLists;

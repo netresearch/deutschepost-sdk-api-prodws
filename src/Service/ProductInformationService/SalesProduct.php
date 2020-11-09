@@ -33,6 +33,11 @@ class SalesProduct implements SalesProductInterface
     /**
      * @var string
      */
+    private $pplId;
+
+    /**
+     * @var string
+     */
     private $destination;
 
     /**
@@ -69,6 +74,7 @@ class SalesProduct implements SalesProductInterface
         string $id,
         string $name,
         int $version,
+        string $pplId,
         string $destination,
         ValueInterface $price,
         ValueRangeInterface $length,
@@ -80,6 +86,7 @@ class SalesProduct implements SalesProductInterface
         $this->id = $id;
         $this->name = $name;
         $this->version = $version;
+        $this->pplId = $pplId;
         $this->destination = $destination;
         $this->price = $price;
         $this->length = $length;
@@ -102,6 +109,11 @@ class SalesProduct implements SalesProductInterface
     public function getVersion(): int
     {
         return $this->version;
+    }
+
+    public function getPPLId(): string
+    {
+        return $this->pplId;
     }
 
     public function getDestination(): string

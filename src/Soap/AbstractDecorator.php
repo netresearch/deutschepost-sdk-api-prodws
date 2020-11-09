@@ -18,9 +18,6 @@ use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponse;
  * - add authentication
  * - transform errors into exceptions
  * - log communication
- *
- * @author Christoph Aßmann <christoph.assmann@netresearch.de>
- * @link   https://www.netresearch.de/
  */
 abstract class AbstractDecorator extends AbstractClient
 {

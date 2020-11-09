@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace DeutschePost\Sdk\ProdWS\Model;
 
-use DeutschePost\Sdk\ProdWS\Model\ResponseType\ExceptionDetailType;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\ExceptionList;
 use DeutschePost\Sdk\ProdWS\Model\ResponseType\GetProductVersionsListResponseType;
 

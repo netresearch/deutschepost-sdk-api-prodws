@@ -39,6 +39,13 @@ interface SalesProductInterface
     public function getVersion(): int;
 
     /**
+     * Obtain unique ID in the PPL system.
+     *
+     * @return string
+     */
+    public function getPPLId(): string;
+
+    /**
      * Obtain shipping destination of the product.
      *
      * @return string enum, national or international
