@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace DeutschePost\Sdk\ProdWS\Api;
 
-use DeutschePost\Sdk\ProdWS\Exception\ServiceException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,7 +23,7 @@ interface ServiceFactoryInterface
      * @param LoggerInterface $logger
      *
      * @return ProductInformationServiceInterface
-     * @throws ServiceException
+     * @throws \RuntimeException
      */
     public function createProductInformationService(
         string $username,

@@ -91,7 +91,6 @@ class ProductAddition implements ProductAdditionInterface
         return $this->price;
     }
 
-
     public function getValidFrom(): \DateTime
     {
         return $this->validFrom;
