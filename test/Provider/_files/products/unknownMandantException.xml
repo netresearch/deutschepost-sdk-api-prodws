@@ -1,0 +1,13 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <getProductVersionsListResponse xmlns="urn:www-deutschepost-de:Product/ProductInformation/1.1/common" success="false">
+            <Exception>
+                <exceptionDetail>
+                    <errorNumber>10101</errorNumber>
+                    <errorMessage>Unbekannter Mandant</errorMessage>
+                    <errorDetail>Die im Element mandantID übergebene Kennung existiert nicht im Datenbestand des ProdWS-Systems.</errorDetail>
+                </exceptionDetail>
+            </Exception>
+        </getProductVersionsListResponse>
+    </soap:Body>
+</soap:Envelope>
