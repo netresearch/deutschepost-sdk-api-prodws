@@ -75,7 +75,6 @@ class ProductInformationServiceTest extends SoapServiceTestCase
     public function authError()
     {
         $this->expectException(ServiceException::class);
-        $this->expectExceptionMessageRegExp('/Authentication failed/');
 
         $logger = new TestLogger();
 
@@ -93,6 +92,8 @@ class ProductInformationServiceTest extends SoapServiceTestCase
                 $soapClient->__getLastResponse(),
                 $logger
             );
+
+            $this->assertNotFalse(strpos($exception->getMessage(), 'Authentication failed'));
 
             throw $exception;
         }
@@ -112,7 +113,6 @@ class ProductInformationServiceTest extends SoapServiceTestCase
     public function mandantError()
     {
         $this->expectException(ServiceException::class);
-        $this->expectExceptionMessageRegExp('/Unbekannter Mandant/');
 
         $logger = new TestLogger();
 
@@ -130,6 +130,8 @@ class ProductInformationServiceTest extends SoapServiceTestCase
                 $soapClient->__getLastResponse(),
                 $logger
             );
+
+            $this->assertNotFalse(strpos($exception->getMessage(), 'Unbekannter Mandant'));
 
             throw $exception;
         }

@@ -9,3 +9,5 @@ parameters:
       message: "#^Access to an undefined property [A-Za-z\\\\]+\\:\\:\\$ProdWS\\-ID\\.$#"
       count: 2
       path: src/Model/ResponseType/*
+    - '#is never written, only read\.$#'
+    - '#is never read, only written\.$#'

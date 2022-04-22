@@ -16,7 +16,7 @@ class ExtendedIdentifierType
     private $externIdentifier;
 
     /**
-     * @var string $ProdWSID
+     * @var string|null $ProdWSID
      */
     private $ProdWSID;
 

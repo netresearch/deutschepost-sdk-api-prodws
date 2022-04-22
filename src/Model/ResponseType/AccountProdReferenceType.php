@@ -16,7 +16,7 @@ class AccountProdReferenceType
     private $countryNegativList;
 
     /**
-     * @var string $ProdWSID
+     * @var string|null $ProdWSID
      */
     private $ProdWSID;
 
