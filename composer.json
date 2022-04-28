@@ -39,10 +39,5 @@
         "psr-4": {
             "DeutschePost\\Sdk\\ProdWS\\Test\\": "test/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.1.0.x-dev"
-        }
     }
 }
