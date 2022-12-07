@@ -26,12 +26,29 @@ use DeutschePost\Sdk\ProdWS\Service\ProductInformationService\ValueRange;
 class GetProductVersionsListResponseMapper
 {
     /**
+     * Obtain the oldest PPL version the product is contained in.
+     *
+     * @param ExtendedIdentifierType $identifiersList
+     * @return int
+     */
+    private function getFirstPPLVersion(ExtendedIdentifierType $identifiersList): int
+    {
+        foreach ($identifiersList->getExternalIdentifiers() as $externalIdentifier) {
+            if ($externalIdentifier->getSource() === 'PPL') {
+                return $externalIdentifier->getFirstPPLVersion();
+            }
+        }
+
+        return 0;
+    }
+
+    /**
      * Obtain the most recent PPL version the product is contained in.
      *
      * @param ExtendedIdentifierType $identifiersList
      * @return int
      */
-    private function getPPLVersion(ExtendedIdentifierType $identifiersList): int
+    private function getLastPPLVersion(ExtendedIdentifierType $identifiersList): int
     {
         foreach ($identifiersList->getExternalIdentifiers() as $externalIdentifier) {
             if ($externalIdentifier->getSource() === 'PPL') {
@@ -83,7 +100,8 @@ class GetProductVersionsListResponseMapper
         $productListDates = [];
         foreach ($response->getSalesProductList()->getSalesProducts() as $salesProduct) {
             $extId = $salesProduct->getExtendedIdentifier();
-            $pplVersion = $this->getPPLVersion($extId);
+            $firstPplVersion = $this->getFirstPPLVersion($extId);
+            $lastPplVersion = $this->getLastPPLVersion($extId);
             $pplId = $this->getPPLId($extId);
 
             $price = $salesProduct->getPriceDefinition()->getPrice()->getCommercialGrossPrice();
@@ -99,28 +117,36 @@ class GetProductVersionsListResponseMapper
                 $salesProduct->getAccountProductReferenceList()->getAccountProductReferences()
             );
 
-            $basicComponents = array_intersect_key($basicProducts, array_flip($refKeys));
-            $additionalComponents = array_intersect_key($productAdditions, array_flip($refKeys));
+            for ($pplVersion = $firstPplVersion; $pplVersion <= $lastPplVersion; $pplVersion++) {
+                $basicComponents = array_intersect_key($basicProducts, array_flip($refKeys));
+                $additionalComponents = array_intersect_key($productAdditions, array_flip($refKeys));
 
-            $salesProducts[$pplVersion][] = new SalesProduct(
-                $extId->getProdWSID(),
-                $extId->getName(),
-                $extId->getVersion(),
-                $pplId,
-                $extId->getDestination(),
-                new Value($price->getCurrency(), $price->getValue()),
-                new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
-                new ValueRange($width->getUnit(), $width->getMinValue(), $width->getMaxValue()),
-                new ValueRange($height->getUnit(), $height->getMinValue(), $height->getMaxValue()),
-                $weight ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
-                new SalesProductComponents(array_shift($basicComponents), $additionalComponents)
-            );
+                $salesProducts[$pplVersion][] = new SalesProduct(
+                    $extId->getProdWSID(),
+                    $extId->getName(),
+                    $extId->getVersion(),
+                    $pplId,
+                    $extId->getDestination(),
+                    new Value($price->getCurrency(), $price->getValue()),
+                    new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
+                    new ValueRange($width->getUnit(), $width->getMinValue(), $width->getMaxValue()),
+                    new ValueRange($height->getUnit(), $height->getMinValue(), $height->getMaxValue()),
+                    $weight ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
+                    new SalesProductComponents(array_shift($basicComponents), $additionalComponents)
+                );
+            }
 
-            $productListDates[$pplVersion] = [
-                'valid_from' => $extId->getValidFrom(),
-                'valid_to' => $extId->getValidTo(),
-            ];
+            // infer product list date range from sales product
+            if ($extId->getValidFrom() > ($productListDates[$lastPplVersion]['valid_from'] ?? 0)) {
+                $productListDates[$lastPplVersion] = [
+                    'valid_from' => $extId->getValidFrom(),
+                    'valid_to' => $extId->getValidTo(),
+                ];
+            }
         }
+
+        // drop sales products that are neither assigned to the latest nor the previous list
+        $salesProducts = array_intersect_key($salesProducts, $productListDates);
 
         $productLists = [];
         foreach ($salesProducts as $pplVersion => $pplSalesProducts) {

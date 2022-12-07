@@ -21,22 +21,39 @@ use Psr\Log\Test\TestLogger;
 
 class ProductInformationServiceTest extends SoapServiceTestCase
 {
+    public function successDataProvider(): array
+    {
+        return GetProductVersionsListResponseProvider::success();
+    }
+
+    public function authFailureDataProvider(): array
+    {
+        return AuthenticationResponseProvider::userAuthFailure();
+    }
+
+    public function mandantErrorDataProvider(): array
+    {
+        return GetProductVersionsListResponseProvider::mandantError();
+    }
+
     /**
      * Scenario: Retrieve product list from the web service.
      *
      * Assert that
-     * - service response is a non-empty array of page formats
+     * - service response is a non-empty array of product list(s)
      * - communication gets logged
      *
      * @test
+     * @dataProvider successDataProvider
+     *
+     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function retrieveProductLists()
+    public function retrieveProductLists(string $responseXml)
     {
         $logger = new TestLogger();
 
-        $responseXml = GetProductVersionsListResponseProvider::success();
         $soapClient = $this->getSoapClientMock([$responseXml]);
         $serviceFactory = new SoapServiceFactory($soapClient);
         $service = $serviceFactory->createProductInformationService('user', 'password', $logger);
@@ -69,16 +86,18 @@ class ProductInformationServiceTest extends SoapServiceTestCase
      * - communication gets logged with ERROR severity
      *
      * @test
+     * @dataProvider authFailureDataProvider
+     *
+     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function authError()
+    public function authError(string $responseXml)
     {
         $this->expectException(ServiceException::class);
 
         $logger = new TestLogger();
 
-        $responseXml = AuthenticationResponseProvider::userAuthFailure();
         $soapClient = $this->getSoapClientMock([$responseXml]);
         $serviceFactory = new SoapServiceFactory($soapClient);
         $service = $serviceFactory->createProductInformationService('user', 'wr0ngPa55', $logger);
@@ -107,16 +126,18 @@ class ProductInformationServiceTest extends SoapServiceTestCase
      * - communication gets logged with ERROR severity
      *
      * @test
+     * @dataProvider mandantErrorDataProvider
+     *
+     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function mandantError()
+    public function mandantError(string $responseXml)
     {
         $this->expectException(ServiceException::class);
 
         $logger = new TestLogger();
 
-        $responseXml = GetProductVersionsListResponseProvider::mandantError();
         $soapClient = $this->getSoapClientMock([$responseXml]);
         $serviceFactory = new SoapServiceFactory($soapClient);
         $service = $serviceFactory->createProductInformationService('user', 'password', $logger);

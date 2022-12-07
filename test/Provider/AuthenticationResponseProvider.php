@@ -11,12 +11,14 @@ namespace DeutschePost\Sdk\ProdWS\Test\Provider;
 class AuthenticationResponseProvider
 {
     /**
-     * User authentication fails, wrong user name or invalid password.
+     * User authentication fails, wrong username or invalid password.
      *
-     * @return string
+     * @return string[][]
      */
-    public static function userAuthFailure(): string
+    public static function userAuthFailure(): array
     {
-        return \file_get_contents(__DIR__ . '/_files/auth/authenticationFailed.xml');
+        return [
+            'auth failed' => [\file_get_contents(__DIR__ . '/_files/auth/authenticationFailed.xml')]
+        ];
     }
 }
