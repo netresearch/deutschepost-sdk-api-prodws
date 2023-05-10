@@ -16,7 +16,7 @@ class CountryList
     private $operator;
 
     /**
-     * @var string[] $country_ISOCode
+     * @var string|string[] $country_ISOCode
      */
     private $country_ISOCode;
 

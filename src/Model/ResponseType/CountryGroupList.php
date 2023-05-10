@@ -11,33 +11,23 @@ namespace DeutschePost\Sdk\ProdWS\Model\ResponseType;
 class CountryGroupList
 {
     /**
-     * @var string|null $operator
+     * @var CountryGroupType|CountryGroupType[]
      */
-    private $operator;
+    private $countryGroup;
 
     /**
-     * @var string[] $countryGroup_shortName
+     * @return CountryGroupType[]
      */
-    private $countryGroup_shortName;
-
-    public function getOperator(): ?string
+    public function getCountryGroups(): array
     {
-        return $this->operator;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getCountryGroupShortNames(): array
-    {
-        if (empty($this->countryGroup_shortName)) {
+        if (empty($this->countryGroup)) {
             return [];
         }
 
-        if (is_string($this->countryGroup_shortName)) {
-            return [$this->countryGroup_shortName];
+        if ($this->countryGroup instanceof CountryGroupType) {
+            return [$this->countryGroup];
         }
 
-        return $this->countryGroup_shortName;
+        return $this->countryGroup;
     }
 }

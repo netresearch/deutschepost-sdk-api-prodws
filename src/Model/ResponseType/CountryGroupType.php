@@ -8,8 +8,18 @@ declare(strict_types=1);
 
 namespace DeutschePost\Sdk\ProdWS\Model\ResponseType;
 
-class NationalZipCodeListType
+class CountryGroupType
 {
+    /**
+     * @var string $shortName
+     */
+    private $shortName;
+
+    /**
+     * @var string $user
+     */
+    private $user;
+
     /**
      * @var string|null $name
      */
@@ -20,10 +30,15 @@ class NationalZipCodeListType
      */
     private $description;
 
-    /**
-     * @var string|string[] $nationalZipCode
-     */
-    private $nationalZipCode;
+    public function getShortName(): string
+    {
+        return $this->shortName;
+    }
+
+    public function getUser(): string
+    {
+        return $this->user;
+    }
 
     public function getName(): ?string
     {
@@ -33,21 +48,5 @@ class NationalZipCodeListType
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getNationalZipCodes(): array
-    {
-        if (empty($this->nationalZipCode)) {
-            return [];
-        }
-
-        if (is_string($this->nationalZipCode)) {
-            return [$this->nationalZipCode];
-        }
-
-        return $this->nationalZipCode;
     }
 }

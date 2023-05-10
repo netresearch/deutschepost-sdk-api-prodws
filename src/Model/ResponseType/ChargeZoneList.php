@@ -16,7 +16,7 @@ class ChargeZoneList
     private $operator;
 
     /**
-     * @var string[] $chargeZone_shortName
+     * @var string|string[] $chargeZone_shortName
      */
     private $chargeZone_shortName;
 

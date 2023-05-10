@@ -11,7 +11,7 @@ namespace DeutschePost\Sdk\ProdWS\Model\ResponseType;
 class ServiceDayList
 {
     /**
-     * @var string[] $serviceDay
+     * @var string|string[] $serviceDay
      */
     private $serviceDay;
 

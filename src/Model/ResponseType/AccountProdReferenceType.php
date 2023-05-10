@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace DeutschePost\Sdk\ProdWS\Model\ResponseType;
 
+#[\AllowDynamicProperties]
 class AccountProdReferenceType
 {
     /**
