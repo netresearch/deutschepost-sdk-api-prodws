@@ -8,7 +8,7 @@ The DPDHL Product Information API SDK package offers an interface to the followi
 
 ### System Requirements
 
-- PHP 7.2+ with SOAP extension
+- PHP 8.1+ with SOAP extension
 
 ### Package Requirements
 
