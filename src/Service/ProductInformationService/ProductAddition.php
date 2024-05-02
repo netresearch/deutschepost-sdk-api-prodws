@@ -13,57 +13,8 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ValueInterface;
 
 class ProductAddition implements ProductAdditionInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $destination;
-
-    /**
-     * @var ValueInterface
-     */
-    private $price;
-
-    /**
-     * @var \DateTime
-     */
-    private $validFrom;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $validTo;
-
-    public function __construct(
-        string $id,
-        string $name,
-        int $version,
-        string $destination,
-        ValueInterface $price,
-        \DateTime $validFrom,
-        ?\DateTime $validTo
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->version = $version;
-        $this->destination = $destination;
-        $this->price = $price;
-        $this->validFrom = $validFrom;
-        $this->validTo = $validTo;
+    public function __construct(private string $id, private string $name, private int $version, private string $destination, private ValueInterface $price, private \DateTime $validFrom, private ?\DateTime $validTo)
+    {
     }
 
     public function getId(): string

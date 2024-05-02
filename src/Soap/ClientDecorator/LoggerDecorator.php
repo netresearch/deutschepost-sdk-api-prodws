@@ -17,21 +17,8 @@ use Psr\Log\LogLevel;
 
 class LoggerDecorator extends AbstractDecorator
 {
-    /**
-     * @var \SoapClient
-     */
-    private $soapClient;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(AbstractClient $client, \SoapClient $soapClient, LoggerInterface $logger)
+    public function __construct(AbstractClient $client, private \SoapClient $soapClient, private LoggerInterface $logger)
     {
-        $this->soapClient = $soapClient;
-        $this->logger = $logger;
-
         parent::__construct($client);
     }
 

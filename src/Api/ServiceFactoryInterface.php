@@ -18,11 +18,7 @@ interface ServiceFactoryInterface
     /**
      * Create the service instance to retrieve DPDHL product information.
      *
-     * @param string $username
-     * @param string $password
-     * @param LoggerInterface $logger
      *
-     * @return ProductInformationServiceInterface
      * @throws \RuntimeException
      */
     public function createProductInformationService(

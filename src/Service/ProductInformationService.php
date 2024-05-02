@@ -16,20 +16,8 @@ use DeutschePost\Sdk\ProdWS\Soap\AbstractClient;
 
 class ProductInformationService implements ProductInformationServiceInterface
 {
-    /**
-     * @var AbstractClient
-     */
-    private $client;
-
-    /**
-     * @var GetProductVersionsListResponseMapper
-     */
-    private $responseMapper;
-
-    public function __construct(AbstractClient $client, GetProductVersionsListResponseMapper $responseMapper)
+    public function __construct(private AbstractClient $client, private GetProductVersionsListResponseMapper $responseMapper)
     {
-        $this->client = $client;
-        $this->responseMapper = $responseMapper;
     }
 
     public function getProductLists(string $mandantId): array

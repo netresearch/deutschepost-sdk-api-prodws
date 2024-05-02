@@ -20,17 +20,11 @@ class TimestampType
      */
     private $time;
 
-    /**
-     * @return string
-     */
     public function getDate(): string
     {
         return $this->date;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTime(): ?string
     {
         return $this->time;

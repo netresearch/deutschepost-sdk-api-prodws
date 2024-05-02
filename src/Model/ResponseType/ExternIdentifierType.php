@@ -55,73 +55,46 @@ class ExternIdentifierType
      */
     private $sapProductType;
 
-    /**
-     * @return string
-     */
     public function getSource(): string
     {
         return $this->source;
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    /**
-     * @return int|null
-     */
     public function getFirstPPLVersion(): ?int
     {
         return $this->firstPPLVersion;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLastPPLVersion(): ?int
     {
         return $this->lastPPLVersion;
     }
 
-    /**
-     * @return int|null
-     */
     public function getActualPPLVersion(): ?int
     {
         return $this->actualPPLVersion;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSapProductType(): ?string
     {
         return $this->sapProductType;

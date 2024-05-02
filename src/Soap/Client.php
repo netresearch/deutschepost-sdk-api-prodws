@@ -13,14 +13,8 @@ use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponse;
 
 class Client extends AbstractClient
 {
-    /**
-     * @var \SoapClient
-     */
-    private $soapClient;
-
-    public function __construct(\SoapClient $soapClient)
+    public function __construct(private \SoapClient $soapClient)
     {
-        $this->soapClient = $soapClient;
     }
 
     public function getProductVersionsList(GetProductVersionsListRequest $requestType): GetProductVersionsListResponse

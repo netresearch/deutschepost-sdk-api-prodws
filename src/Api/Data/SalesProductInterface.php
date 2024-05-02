@@ -19,29 +19,21 @@ interface SalesProductInterface
 {
     /**
      * Obtain unique ID in the ProdWS system.
-     *
-     * @return string
      */
     public function getId(): string;
 
     /**
      * Obtain name of product in the ProdWS system.
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Obtain product revision number in the ProdWS system.
-     *
-     * @return int
      */
     public function getVersion(): int;
 
     /**
      * Obtain unique ID in the PPL system.
-     *
-     * @return string
      */
     public function getPPLId(): string;
 
@@ -54,29 +46,21 @@ interface SalesProductInterface
 
     /**
      * Obtain gross price of the product.
-     *
-     * @return ValueInterface
      */
     public function getPrice(): ValueInterface;
 
     /**
      * Obtain min and max length of the product.
-     *
-     * @return ValueRangeInterface
      */
     public function getLength(): ValueRangeInterface;
 
     /**
      * Obtain min and max width of the product.
-     *
-     * @return ValueRangeInterface
      */
     public function getWidth(): ValueRangeInterface;
 
     /**
      * Obtain min and max height of the product.
-     *
-     * @return ValueRangeInterface
      */
     public function getHeight(): ValueRangeInterface;
 
@@ -84,15 +68,11 @@ interface SalesProductInterface
      * Obtain min and max weight of the product.
      *
      * Note that e.g. "Postkarte" product has no volume and therefore no weight limitations.
-     *
-     * @return ValueRangeInterface|null
      */
     public function getWeight(): ?ValueRangeInterface;
 
     /**
      * Obtain the sales product's components.
-     *
-     * @return SalesProductComponentsInterface
      */
     public function getComponents(): SalesProductComponentsInterface;
 }

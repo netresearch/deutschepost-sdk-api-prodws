@@ -15,8 +15,6 @@ interface SalesProductComponentsInterface
 {
     /**
      * Obtain the sales product's basic product.
-     *
-     * @return BasicProductInterface
      */
     public function getBasicProduct(): BasicProductInterface;
 

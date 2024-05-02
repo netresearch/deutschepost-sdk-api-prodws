@@ -23,17 +23,15 @@ class ErrorHandlerDecorator extends AbstractDecorator
         if (!$response->isSuccess()) {
             $message = 'Product list could not be retrieved from ProdWS.';
 
-            if ($response->getExceptionList() !== null) {
+            if ($response->getExceptionList() instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\ExceptionList) {
                 // create exception message from exception list
                 $messages = array_map(
-                    function (ExceptionDetailType $detail) {
-                        return sprintf(
-                            '[%s] %s: %s',
-                            $detail->getErrorNumber(),
-                            $detail->getErrorMessage(),
-                            $detail->getErrorDetail()
-                        );
-                    },
+                    fn(ExceptionDetailType $detail): string => sprintf(
+                        '[%s] %s: %s',
+                        $detail->getErrorNumber(),
+                        $detail->getErrorMessage(),
+                        $detail->getErrorDetail()
+                    ),
                     $response->getExceptionList()->getExceptions()
                 );
                 $message = implode("\n", $messages);

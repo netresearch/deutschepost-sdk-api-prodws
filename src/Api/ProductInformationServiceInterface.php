@@ -17,9 +17,7 @@ use DeutschePost\Sdk\ProdWS\Exception\ServiceException;
 interface ProductInformationServiceInterface
 {
     /**
-     * @param string $mandantId
      * @return SalesProductListInterface[]
-     *
      * @throws ServiceException
      */
     public function getProductLists(string $mandantId): array;

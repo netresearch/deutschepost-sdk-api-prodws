@@ -102,113 +102,71 @@ class ExtendedIdentifierType
         return $this->externIdentifier;
     }
 
-    /**
-     * @return string
-     */
     public function getProdWSID(): string
     {
         return $this->ProdWSID ?? $this->{'ProdWS-ID'};
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getShortName(): ?string
     {
         return $this->shortName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAnnotation(): ?string
     {
         return $this->annotation;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBranche(): ?string
     {
         return $this->branche;
     }
 
-    /**
-     * @return string
-     */
     public function getDestination(): string
     {
         return $this->destination;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTransport(): ?string
     {
         return $this->transport;
     }
 
-    /**
-     * @return string|null
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getState(): ?string
     {
         return $this->state;
     }
 
-    /**
-     * @return int
-     */
     public function getVersion(): int
     {
         return $this->version;
     }
 
-    /**
-     * @return string
-     */
     public function getValidFrom(): string
     {
         return $this->validFrom;
     }
 
-    /**
-     * @return string|null
-     */
     public function getValidTo(): ?string
     {
         return $this->validTo;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRelease(): ?string
     {
         return $this->release;

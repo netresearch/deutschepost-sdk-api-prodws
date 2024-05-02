@@ -14,85 +14,8 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ValueRangeInterface;
 
 class BasicProduct implements BasicProductInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $destination;
-
-    /**
-     * @var ValueInterface
-     */
-    private $price;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $length;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $width;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $height;
-
-    /**
-     * @var ValueRangeInterface|null
-     */
-    private $weight;
-
-    /**
-     * @var \DateTime
-     */
-    private $validFrom;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $validTo;
-
-    public function __construct(
-        string $id,
-        string $name,
-        int $version,
-        string $destination,
-        ValueInterface $price,
-        ValueRangeInterface $length,
-        ValueRangeInterface $width,
-        ValueRangeInterface $height,
-        ?ValueRangeInterface $weight,
-        \DateTime $validFrom,
-        ?\DateTime $validTo
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->version = $version;
-        $this->destination = $destination;
-        $this->price = $price;
-        $this->length = $length;
-        $this->width = $width;
-        $this->height = $height;
-        $this->weight = $weight;
-        $this->validFrom = $validFrom;
-        $this->validTo = $validTo;
+    public function __construct(private string $id, private string $name, private int $version, private string $destination, private ValueInterface $price, private ValueRangeInterface $length, private ValueRangeInterface $width, private ValueRangeInterface $height, private ?ValueRangeInterface $weight, private \DateTime $validFrom, private ?\DateTime $validTo)
+    {
     }
 
     public function getId(): string

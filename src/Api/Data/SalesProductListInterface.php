@@ -17,15 +17,11 @@ interface SalesProductListInterface
 {
     /**
      * Obtain unique ID in the ProdWS system.
-     *
-     * @return int
      */
     public function getId(): int;
 
     /**
      * Obtain start date of the product revision.
-     *
-     * @return \DateTime
      */
     public function getValidFrom(): \DateTime;
 

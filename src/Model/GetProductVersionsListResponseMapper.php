@@ -27,9 +27,6 @@ class GetProductVersionsListResponseMapper
 {
     /**
      * Obtain the oldest PPL version the product is contained in.
-     *
-     * @param ExtendedIdentifierType $identifiersList
-     * @return int
      */
     private function getFirstPPLVersion(ExtendedIdentifierType $identifiersList): int
     {
@@ -44,9 +41,6 @@ class GetProductVersionsListResponseMapper
 
     /**
      * Obtain the most recent PPL version the product is contained in.
-     *
-     * @param ExtendedIdentifierType $identifiersList
-     * @return int
      */
     private function getLastPPLVersion(ExtendedIdentifierType $identifiersList): int
     {
@@ -61,9 +55,6 @@ class GetProductVersionsListResponseMapper
 
     /**
      * Obtain the product's identifier in the PPL system.
-     *
-     * @param ExtendedIdentifierType $identifiersList
-     * @return string
      */
     private function getPPLId(ExtendedIdentifierType $identifiersList): string
     {
@@ -77,13 +68,12 @@ class GetProductVersionsListResponseMapper
     }
 
     /**
-     * @param ?GetProductVersionsListResponseType $response
      * @return SalesProductListInterface[]
      * @throws \Exception
      */
     public function map(?GetProductVersionsListResponseType $response): array
     {
-        if ($response === null || $response->getSalesProductList() === null) {
+        if (!$response instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\GetProductVersionsListResponseType || !$response->getSalesProductList() instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\SalesProductList) {
             return [];
         }
 
@@ -111,9 +101,7 @@ class GetProductVersionsListResponseMapper
             $weight = $salesProduct->getWeight();
 
             $refKeys = array_map(
-                static function (AccountProdReferenceType $ref) {
-                    return sprintf("%s-%d", $ref->getProdWSID(), $ref->getVersion());
-                },
+                static fn(AccountProdReferenceType $ref): string => sprintf("%s-%d", $ref->getProdWSID(), $ref->getVersion()),
                 $salesProduct->getAccountProductReferenceList()->getAccountProductReferences()
             );
 
@@ -164,19 +152,18 @@ class GetProductVersionsListResponseMapper
     }
 
     /**
-     * @param BasicProductList|null $productList
      * @return BasicProduct[]
      * @throws \Exception
      */
     private function extractBasicProducts(?BasicProductList $productList): array
     {
-        if ($productList === null) {
+        if (!$productList instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\BasicProductList) {
             return [];
         }
 
         return array_reduce(
             $productList->getBasicProducts(),
-            static function (array $basicProducts, BasicProductType $basicProduct) {
+            static function (array $basicProducts, BasicProductType $basicProduct): array {
                 $extId = $basicProduct->getExtendedIdentifier();
                 $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
 
@@ -195,7 +182,7 @@ class GetProductVersionsListResponseMapper
                     new ValueRange($length->getUnit(), $length->getMinValue(), $length->getMaxValue()),
                     new ValueRange($width->getUnit(), $width->getMinValue(), $width->getMaxValue()),
                     new ValueRange($height->getUnit(), $height->getMinValue(), $height->getMaxValue()),
-                    $weight ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
+                    $weight instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\NumericValueType ? new ValueRange($weight->getUnit(), $weight->getMinValue(), $weight->getMaxValue()) : null,
                     new \DateTime($extId->getValidFrom()),
                     $extId->getValidTo() ? new \DateTime($extId->getValidTo()) : null
                 );
@@ -207,19 +194,18 @@ class GetProductVersionsListResponseMapper
     }
 
     /**
-     * @param ResponseType\AdditionalProductList|null $productAdditionsList
      * @return ProductAddition[]
      * @throws \Exception
      */
     private function extractProductAdditions(?ResponseType\AdditionalProductList $productAdditionsList): array
     {
-        if ($productAdditionsList === null) {
+        if (!$productAdditionsList instanceof \DeutschePost\Sdk\ProdWS\Model\ResponseType\AdditionalProductList) {
             return [];
         }
 
         return array_reduce(
             $productAdditionsList->getAdditionalProducts(),
-            static function (array $productAdditions, AdditionalProductType $additionalProduct) {
+            static function (array $productAdditions, AdditionalProductType $additionalProduct): array {
                 $extId = $additionalProduct->getExtendedIdentifier();
                 $key = sprintf("%s-%d", $extId->getProdWSID(), $extId->getVersion());
 

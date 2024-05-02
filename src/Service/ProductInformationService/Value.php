@@ -12,20 +12,8 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ValueInterface;
 
 class Value implements ValueInterface
 {
-    /**
-     * @var string
-     */
-    private $unit;
-
-    /**
-     * @var float
-     */
-    private $amount;
-
-    public function __construct(string $unit, float $amount)
+    public function __construct(private string $unit, private float $amount)
     {
-        $this->unit = $unit;
-        $this->amount = $amount;
     }
 
     public function getUnit(): string

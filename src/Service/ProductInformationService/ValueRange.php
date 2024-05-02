@@ -12,26 +12,8 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ValueRangeInterface;
 
 class ValueRange implements ValueRangeInterface
 {
-    /**
-     * @var string
-     */
-    private $unit;
-
-    /**
-     * @var float
-     */
-    private $min;
-
-    /**
-     * @var float
-     */
-    private $max;
-
-    public function __construct(string $unit, float $min, float $max)
+    public function __construct(private string $unit, private float $min, private float $max)
     {
-        $this->unit = $unit;
-        $this->min = $min;
-        $this->max = $max;
     }
 
     public function getUnit(): string

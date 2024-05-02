@@ -35,41 +35,26 @@ class PriceType
      */
     private $priceValidity;
 
-    /**
-     * @return CurrencyAmountType|null
-     */
     public function getCalculatedNetPrice(): ?CurrencyAmountType
     {
         return $this->calculatedNetPrice;
     }
 
-    /**
-     * @return CurrencyAmountType|null
-     */
     public function getCalculatedGrossPrice(): ?CurrencyAmountType
     {
         return $this->calculatedGrossPrice;
     }
 
-    /**
-     * @return CurrencyAmountType|null
-     */
     public function getCommercialBalance(): ?CurrencyAmountType
     {
         return $this->commercialBalance;
     }
 
-    /**
-     * @return CurrencyAmountType
-     */
     public function getCommercialGrossPrice(): CurrencyAmountType
     {
         return $this->commercialGrossPrice;
     }
 
-    /**
-     * @return ValidityType|null
-     */
     public function getPriceValidity(): ?ValidityType
     {
         return $this->priceValidity;

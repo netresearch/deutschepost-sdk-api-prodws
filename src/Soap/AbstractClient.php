@@ -14,8 +14,6 @@ use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponse;
 abstract class AbstractClient
 {
     /**
-     * @param GetProductVersionsListRequest $requestType
-     * @return GetProductVersionsListResponse
      * @throws \SoapFault
      * @throws \Exception
      */

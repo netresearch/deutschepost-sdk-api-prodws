@@ -10,75 +10,33 @@ namespace DeutschePost\Sdk\ProdWS\Model;
 
 class GetProductVersionsListRequest
 {
-    /**
-     * @var string $mandantID
-     */
-    private $mandantID;
+    private ?string $subMandantID = null;
 
-    /**
-     * @var string $subMandantID
-     */
-    private $subMandantID;
+    private ?bool $onlyChanges = null;
 
-    /**
-     * @var bool $dedicatedProducts
-     */
-    private $dedicatedProducts;
+    private ?string $referenceDate = null;
 
-    /**
-     * @var int $responseMode
-     */
-    private $responseMode;
+    private ?bool $shortList = null;
 
-    /**
-     * @var bool $onlyChanges
-     */
-    private $onlyChanges;
-
-    /**
-     * @var string $referenceDate
-     */
-    private $referenceDate;
-
-    /**
-     * @var bool $shortList
-     */
-    private $shortList;
-
-    public function __construct(string $mandantID, bool $dedicatedProducts, int $responseMode)
+    public function __construct(private string $mandantID, private bool $dedicatedProducts, private int $responseMode)
     {
-        $this->mandantID = $mandantID;
-        $this->dedicatedProducts = $dedicatedProducts;
-        $this->responseMode = $responseMode;
     }
 
-    /**
-     * @param string $subMandantID
-     */
     public function setSubMandantID(string $subMandantID): void
     {
         $this->subMandantID = $subMandantID;
     }
 
-    /**
-     * @param bool $onlyChanges
-     */
     public function setOnlyChanges(bool $onlyChanges): void
     {
         $this->onlyChanges = $onlyChanges;
     }
 
-    /**
-     * @param string $referenceDate
-     */
     public function setReferenceDate(string $referenceDate): void
     {
         $this->referenceDate = $referenceDate;
     }
 
-    /**
-     * @param bool $shortList
-     */
     public function setShortList(bool $shortList): void
     {
         $this->shortList = $shortList;

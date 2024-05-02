@@ -58,31 +58,12 @@ class AuthenticationDecorator extends AbstractDecorator
      */
     private const WSSE_ELEMENT_PASSWORD_TYPE = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText';
 
-    /**
-     * @var \SoapClient
-     */
-    private $soapClient;
-
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var string
-     */
-    private $password;
-
     public function __construct(
         AbstractClient $client,
-        \SoapClient $soapClient,
-        string $username,
-        string $password
+        private \SoapClient $soapClient,
+        private string $username,
+        private string $password
     ) {
-        $this->soapClient = $soapClient;
-        $this->username = $username;
-        $this->password = $password;
-
         parent::__construct($client);
     }
 

@@ -25,25 +25,16 @@ class ExceptionDetailType
      */
     public $errorDetail;
 
-    /**
-     * @return int
-     */
     public function getErrorNumber(): int
     {
         return $this->errorNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getErrorMessage(): string
     {
         return $this->errorMessage;
     }
 
-    /**
-     * @return string
-     */
     public function getErrorDetail(): string
     {
         return $this->errorDetail;

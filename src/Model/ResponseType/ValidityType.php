@@ -20,17 +20,11 @@ class ValidityType
      */
     private $validTo;
 
-    /**
-     * @return TimestampType
-     */
     public function getValidFrom(): TimestampType
     {
         return $this->validFrom;
     }
 
-    /**
-     * @return TimestampType|null
-     */
     public function getValidTo(): ?TimestampType
     {
         return $this->validTo;

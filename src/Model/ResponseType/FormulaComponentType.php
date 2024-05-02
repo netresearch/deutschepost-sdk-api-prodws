@@ -25,25 +25,16 @@ class FormulaComponentType
      */
     private $component;
 
-    /**
-     * @return int
-     */
     public function getProdwsID(): int
     {
         return $this->prodwsID;
     }
 
-    /**
-     * @return int
-     */
     public function getVersion(): int
     {
         return $this->version;
     }
 
-    /**
-     * @return string
-     */
     public function getComponent(): string
     {
         return $this->component;

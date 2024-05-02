@@ -15,85 +15,8 @@ use DeutschePost\Sdk\ProdWS\Api\Data\ValueRangeInterface;
 
 class SalesProduct implements SalesProductInterface
 {
-    /**
-     * @var string
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $version;
-
-    /**
-     * @var string
-     */
-    private $pplId;
-
-    /**
-     * @var string
-     */
-    private $destination;
-
-    /**
-     * @var ValueInterface
-     */
-    private $price;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $length;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $width;
-
-    /**
-     * @var ValueRangeInterface
-     */
-    private $height;
-
-    /**
-     * @var ValueRangeInterface|null
-     */
-    private $weight;
-
-    /**
-     * @var SalesProductComponentsInterface
-     */
-    private $components;
-
-    public function __construct(
-        string $id,
-        string $name,
-        int $version,
-        string $pplId,
-        string $destination,
-        ValueInterface $price,
-        ValueRangeInterface $length,
-        ValueRangeInterface $width,
-        ValueRangeInterface $height,
-        ?ValueRangeInterface $weight,
-        SalesProductComponentsInterface $components
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->version = $version;
-        $this->pplId = $pplId;
-        $this->destination = $destination;
-        $this->price = $price;
-        $this->length = $length;
-        $this->width = $width;
-        $this->height = $height;
-        $this->weight = $weight;
-        $this->components = $components;
+    public function __construct(private string $id, private string $name, private int $version, private string $pplId, private string $destination, private ValueInterface $price, private ValueRangeInterface $length, private ValueRangeInterface $width, private ValueRangeInterface $height, private ?ValueRangeInterface $weight, private SalesProductComponentsInterface $components)
+    {
     }
 
     public function getId(): string

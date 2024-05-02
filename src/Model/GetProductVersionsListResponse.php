@@ -38,9 +38,6 @@ class GetProductVersionsListResponse
         return $this->Exception;
     }
 
-    /**
-     * @return bool
-     */
     public function isSuccess(): bool
     {
         return $this->success;

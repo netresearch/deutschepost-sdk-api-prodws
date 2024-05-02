@@ -21,14 +21,8 @@ use DeutschePost\Sdk\ProdWS\Model\GetProductVersionsListResponse;
  */
 abstract class AbstractDecorator extends AbstractClient
 {
-    /**
-     * @var AbstractClient
-     */
-    private $client;
-
-    public function __construct(AbstractClient $client)
+    public function __construct(private AbstractClient $client)
     {
-        $this->client = $client;
     }
 
     public function getProductVersionsList(GetProductVersionsListRequest $requestType): GetProductVersionsListResponse
