@@ -1,9 +1,9 @@
 includes:
 parameters:
-  level: 7
+  level: 8
   paths:
     - src
-    - tests
+    - test
   ignoreErrors:
     -
       message: "#^Access to an undefined property [A-Za-z\\\\]+\\:\\:\\$ProdWS\\-ID\\.$#"

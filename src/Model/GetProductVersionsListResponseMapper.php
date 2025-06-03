@@ -139,7 +139,7 @@ class GetProductVersionsListResponseMapper
         $productLists = [];
         foreach ($salesProducts as $pplVersion => $pplSalesProducts) {
             $from = new \DateTime($productListDates[$pplVersion]['valid_from']);
-            if (!empty($productListDates[$pplVersion]['valid_to'])) {
+            if (isset($productListDates[$pplVersion]['valid_to']) && ($productListDates[$pplVersion]['valid_to'] !== '' && $productListDates[$pplVersion]['valid_to'] !== '0')) {
                 $to = new \DateTime($productListDates[$pplVersion]['valid_to']);
             } else {
                 $to = null;

@@ -21,17 +21,17 @@ use Psr\Log\Test\TestLogger;
 
 class ProductInformationServiceTest extends SoapServiceTestCase
 {
-    public function successDataProvider(): array
+    public static function successDataProvider(): array
     {
         return GetProductVersionsListResponseProvider::success();
     }
 
-    public function authFailureDataProvider(): array
+    public static function authFailureDataProvider(): array
     {
         return AuthenticationResponseProvider::userAuthFailure();
     }
 
-    public function mandantErrorDataProvider(): array
+    public static function mandantErrorDataProvider(): array
     {
         return GetProductVersionsListResponseProvider::mandantError();
     }
@@ -43,14 +43,13 @@ class ProductInformationServiceTest extends SoapServiceTestCase
      * - service response is a non-empty array of product list(s)
      * - communication gets logged
      *
-     * @test
-     * @dataProvider successDataProvider
      *
-     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function retrieveProductLists(string $responseXml)
+    #[\PHPUnit\Framework\Attributes\DataProvider('successDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function retrieveProductLists(string $responseXml): void
     {
         $logger = new TestLogger();
 
@@ -85,14 +84,13 @@ class ProductInformationServiceTest extends SoapServiceTestCase
      * - only instances of ServiceException get thrown
      * - communication gets logged with ERROR severity
      *
-     * @test
-     * @dataProvider authFailureDataProvider
      *
-     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function authError(string $responseXml)
+    #[\PHPUnit\Framework\Attributes\DataProvider('authFailureDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function authError(string $responseXml): void
     {
         $this->expectException(ServiceException::class);
 
@@ -125,14 +123,13 @@ class ProductInformationServiceTest extends SoapServiceTestCase
      * - only instances of ServiceException get thrown
      * - communication gets logged with ERROR severity
      *
-     * @test
-     * @dataProvider mandantErrorDataProvider
      *
-     * @param string $responseXml
      * @throws ServiceException
      * @throws \ReflectionException
      */
-    public function mandantError(string $responseXml)
+    #[\PHPUnit\Framework\Attributes\DataProvider('mandantErrorDataProvider')]
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function mandantError(string $responseXml): void
     {
         $this->expectException(ServiceException::class);
 
